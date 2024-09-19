@@ -41,9 +41,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E007_MetaData", "Exercises\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L012_Namespace_Using", "Lectures\L012_Namespace_Using\L012_Namespace_Using.csproj", "{E3016792-1411-4832-9C13-09B2A6AB9F88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L012_Constructor", "Lectures\L012_Constructor\L012_Constructor.csproj", "{C81AFC1B-0B71-4C82-814F-DF3A5B9A2DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L012_Constructor", "Lectures\L012_Constructor\L012_Constructor.csproj", "{C81AFC1B-0B71-4C82-814F-DF3A5B9A2DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L012_Properties", "Lectures\L012_Properties\L012_Properties.csproj", "{B928551D-4328-4E59-8DC7-00E91AB2F759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L012_Properties", "Lectures\L012_Properties\L012_Properties.csproj", "{B928551D-4328-4E59-8DC7-00E91AB2F759}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E008_Properties", "Exercises\E008_Properties\E008_Properties.csproj", "{77272978-5844-4A6D-97C7-62CA6D8DEB1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +137,10 @@ Global
 		{B928551D-4328-4E59-8DC7-00E91AB2F759}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B928551D-4328-4E59-8DC7-00E91AB2F759}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B928551D-4328-4E59-8DC7-00E91AB2F759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77272978-5844-4A6D-97C7-62CA6D8DEB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77272978-5844-4A6D-97C7-62CA6D8DEB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77272978-5844-4A6D-97C7-62CA6D8DEB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77272978-5844-4A6D-97C7-62CA6D8DEB1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
