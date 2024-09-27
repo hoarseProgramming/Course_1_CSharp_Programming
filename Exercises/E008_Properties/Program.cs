@@ -42,6 +42,91 @@ BlueAndRed myBlueAndRed = new();
 myBlueAndRed.Red = 20.2314;
 Console.WriteLine($"myBlueAndRed.Blue = {myBlueAndRed.Blue}, myBlueAndRed.Red = {myBlueAndRed.Red}");
 
+//8 Car2
+Car2[] cars = new Car2[1000];
+for (int i = 0; i < 1000; i++)
+{
+    cars[i] = new();
+}
+
+Console.WriteLine(GetGreenCarsLength(cars));
+static int GetGreenCarsLength(Car2[] cars)
+{
+    int sum = 0;
+    for (int i = 0; i < cars.Length; i++)
+    {
+        if (cars[i].color == ConsoleColor.Green)
+        {
+            sum += cars[i].length;
+        }
+    }
+    return sum;
+}
+
+//9 Static method ReturnCars
+
+Car2[] cars2 = Car2.ReturnCarsSamecolor(cars[0]);
+foreach (Car2 car in cars2)
+{
+    Console.WriteLine($"{car.color} {car.length}");
+}
+
+//CarDrivingSimulator
+Console.CursorVisible = false;
+bool weHaveAWinner = false;
+ValueTuple<int, int> winnerDistanceNumber = (0, 0);
+int hoursDriven = 0;
+Car2[] racingCars = new Car2[10];
+for (int i = 0; i < 10; i++)
+{
+    racingCars[i] = new();
+}
+
+Console.Clear();
+
+while (!weHaveAWinner)
+{
+    Console.SetCursorPosition(0, 0);
+    hoursDriven++;
+    for (int i = 0; i < racingCars.Length; i++)
+    {
+        racingCars[i].DriveForOneHour();
+        string graph = racingCars[i].GetGraph();
+        Console.Write($"Car {i + 1}:\t");
+        for (int j = 0; j < graph.Length; j++)
+        {
+            if (graph[j] == 'X')
+            {
+                Console.ForegroundColor = racingCars[i].color;
+                Console.Write(graph[j]);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            else
+            {
+                Console.Write(graph[j]);
+            }
+        }
+        if (racingCars[i].Distance <= 10000)
+        {
+            Console.WriteLine($"\t{ racingCars[i].Distance} km");
+        }        
+        else
+        {
+            weHaveAWinner = true;
+            Console.WriteLine("\t10000 km");
+            if (racingCars[i].Distance > winnerDistanceNumber.Item1)
+            {
+                winnerDistanceNumber.Item1 = racingCars[i].Distance;
+                winnerDistanceNumber.Item2 = i;
+                
+            }
+        }
+    }
+    Console.WriteLine($"{hoursDriven} hour{(hoursDriven > 1 ? "s" : "")} driven. Keep at it drivers!".PadLeft(37));
+    Thread.Sleep(300);
+}
+Console.WriteLine($"The winner is Car {winnerDistanceNumber.Item2}! They drove 10000 km in {hoursDriven} hours!");
+
 class Person
 {
     private string _firstName;
@@ -123,8 +208,6 @@ class Car
         _price = price;
         _colour = colour;
     }
-
-
 }
 class GlassOfWater
 {
@@ -244,4 +327,70 @@ class BlueAndRed
         }
     }
 
+}
+class Car2
+{
+    public ConsoleColor color;
+    public int length;
+    public int speed;
+    private int _distance = 0;
+    public int Distance
+    {
+        get
+        {
+            return _distance;
+        }
+        set
+        {
+            _distance += value;
+        }
+    }
+    public void DriveForOneHour()
+    {
+        this.Distance = this.speed;
+    }
+    public string GetGraph()
+    {
+        string runWay = String.Empty;
+        int distanceMarker = this.Distance / (10000 / 18);
+        for (int i = 0; i < 19; i++)
+        {
+            if (i == distanceMarker)
+            {
+                runWay += 'X';
+            }
+            else if (i == 18 && distanceMarker >= 18)
+            {
+                runWay += 'X';
+            }
+            else
+            {
+                runWay += '-';
+            }
+        }
+        return $"|{runWay}|";
+    }
+    public static Car2[] ReturnCarsSamecolor(Car2 car)
+    {
+        Car2[] randomCars = new Car2[10];
+        for (int i = 0; i < 10; i++)
+        {
+            randomCars[i] = new Car2(car.color);
+        }
+        return randomCars;
+    }
+    public Car2()
+    {
+        Random r = new();
+        length = r.Next(3, 6);
+        color = (ConsoleColor)r.Next(1, 15);
+        speed = r.Next(60, 241);
+
+    }
+    public Car2(ConsoleColor color)
+    {
+        Random r = new();
+        length = r.Next(3, 6);
+        this.color = color;
+    }
 }
