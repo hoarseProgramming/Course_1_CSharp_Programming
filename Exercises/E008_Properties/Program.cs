@@ -1,88 +1,98 @@
 ﻿//Exercises - Properties
 
-//1 Add property firstName
-Person hampus = new Person();
+////1 Add property firstName
+//Person hampus = new Person();
 
-hampus.Firstname = "Hampus";
-Console.WriteLine(hampus.Firstname);
+//hampus.Firstname = "Hampus";
+//Console.WriteLine(hampus.Firstname);
 
-//2 Add autoproperty LastName
-hampus.LastName = "Eiderström Swahn";
-Console.WriteLine(hampus.LastName);
+////2 Add autoproperty LastName
+//hampus.LastName = "Eiderström Swahn";
+//Console.WriteLine(hampus.LastName);
 
-//3 Add Read-only property FullName
-Console.WriteLine(hampus.FullName);
+////3 Add Read-only property FullName
+//Console.WriteLine(hampus.FullName);
 
-//4 Create StepCounter class
-StepCounter myStepCounter = new();
+////4 Create StepCounter class
+//StepCounter myStepCounter = new();
 
-for (int i = 0; i < 1000; i++)
-{
-    myStepCounter.Step();
-}
+//for (int i = 0; i < 1000; i++)
+//{
+//    myStepCounter.Step();
+//}
 
-Console.WriteLine(myStepCounter.Steps);
-myStepCounter.Reset();
-Console.WriteLine(myStepCounter.Steps);
+//Console.WriteLine(myStepCounter.Steps);
+//myStepCounter.Reset();
+//Console.WriteLine(myStepCounter.Steps);
 
-//5 Create Car Class
-Car mazda = new Car("Mazda", 19999, "Red");
-Console.WriteLine($"Model = {mazda.Model}, Price = {mazda.Price}, Colour = {mazda.Colour}");
-mazda.HalfPrice();
-Console.WriteLine(mazda.Price);
+////5 Create Car Class
+//Car mazda = new Car("Mazda", 19999, "Red");
+//Console.WriteLine($"Model = {mazda.Model}, Price = {mazda.Price}, Colour = {mazda.Colour}");
+//mazda.HalfPrice();
+//Console.WriteLine(mazda.Price);
 
-//6 Create GlassOfWater class
-GlassOfWater glass = new();
-glass.BreakGlass();
-glass.EmptyGlass();
-glass.FillGlass();
+////6 Create GlassOfWater class
+//GlassOfWater glass = new();
+//glass.BreakGlass();
+//glass.EmptyGlass();
+//glass.FillGlass();
 
-//7 Blue & Red
-BlueAndRed myBlueAndRed = new();
-myBlueAndRed.Red = 20.2314;
-Console.WriteLine($"myBlueAndRed.Blue = {myBlueAndRed.Blue}, myBlueAndRed.Red = {myBlueAndRed.Red}");
+////7 Blue & Red
+//BlueAndRed myBlueAndRed = new();
+//myBlueAndRed.Red = 20.2314;
+//Console.WriteLine($"myBlueAndRed.Blue = {myBlueAndRed.Blue}, myBlueAndRed.Red = {myBlueAndRed.Red}");
 
 //8 Car2
-Car2[] cars = new Car2[1000];
-for (int i = 0; i < 1000; i++)
-{
-    cars[i] = new();
-}
+//Car2[] cars = new Car2[1000];
+//for (int i = 0; i < 1000; i++)
+//{
+//    cars[i] = new();
+//}
 
-Console.WriteLine(GetGreenCarsLength(cars));
-static int GetGreenCarsLength(Car2[] cars)
-{
-    int sum = 0;
-    for (int i = 0; i < cars.Length; i++)
-    {
-        if (cars[i].color == ConsoleColor.Green)
-        {
-            sum += cars[i].length;
-        }
-    }
-    return sum;
-}
+//Console.WriteLine(GetGreenCarsLength(cars));
+//static int GetGreenCarsLength(Car2[] cars)
+//{
+//    int sum = 0;
+//    for (int i = 0; i < cars.Length; i++)
+//    {
+//        if (cars[i].color == ConsoleColor.Green)
+//        {
+//            sum += cars[i].length;
+//        }
+//    }
+//    return sum;
+//}
 
-//9 Static method ReturnCars
+////9 Static method ReturnCars
 
-Car2[] cars2 = Car2.ReturnCarsSamecolor(cars[0]);
-foreach (Car2 car in cars2)
-{
-    Console.WriteLine($"{car.color} {car.length}");
-}
+//Car2[] cars2 = Car2.ReturnCarsSamecolor(cars[0]);
+//foreach (Car2 car in cars2)
+//{
+//    Console.WriteLine($"{car.color} {car.length}");
+//}
+
+
+
+
+
+
+
+
 
 //CarDrivingSimulator
+Console.WriteLine("Welcome to CarDrivingSimulator. Press any key to start");
+Console.ReadKey();
+Console.Clear();
 Console.CursorVisible = false;
 bool weHaveAWinner = false;
 ValueTuple<int, int> winnerDistanceNumber = (0, 0);
 int hoursDriven = 0;
+
 Car2[] racingCars = new Car2[10];
 for (int i = 0; i < 10; i++)
 {
     racingCars[i] = new();
 }
-
-Console.Clear();
 
 while (!weHaveAWinner)
 {
@@ -92,6 +102,7 @@ while (!weHaveAWinner)
     {
         racingCars[i].DriveForOneHour();
         string graph = racingCars[i].GetGraph();
+
         Console.Write($"Car {i + 1}:\t");
         for (int j = 0; j < graph.Length; j++)
         {
@@ -106,7 +117,7 @@ while (!weHaveAWinner)
                 Console.Write(graph[j]);
             }
         }
-        if (racingCars[i].Distance <= 10000)
+        if (racingCars[i].Distance < 10000)
         {
             Console.WriteLine($"\t{ racingCars[i].Distance} km");
         }        
@@ -117,7 +128,7 @@ while (!weHaveAWinner)
             if (racingCars[i].Distance > winnerDistanceNumber.Item1)
             {
                 winnerDistanceNumber.Item1 = racingCars[i].Distance;
-                winnerDistanceNumber.Item2 = i;
+                winnerDistanceNumber.Item2 = i + 1;
                 
             }
         }
@@ -126,6 +137,83 @@ while (!weHaveAWinner)
     Thread.Sleep(300);
 }
 Console.WriteLine($"The winner is Car {winnerDistanceNumber.Item2}! They drove 10000 km in {hoursDriven} hours!");
+
+class Car2
+{
+    public ConsoleColor color;
+    public int length;
+    public int speed;
+    private int _distance = 0;
+    public int Distance
+    {
+        get
+        {
+            return _distance;
+        }
+        set
+        {
+            _distance += value;
+        }
+    }
+    public void DriveForOneHour()
+    {
+        this.Distance = this.speed;
+    }
+    public string GetGraph()
+    {
+        string runWay = String.Empty;
+        int distanceMarker = this.Distance / (10000 / 18);
+        for (int i = 0; i < 19; i++)
+        {
+            if (i == distanceMarker)
+            {
+                runWay += 'X';
+            }
+            else
+            {
+                runWay += '-';
+            }
+        }
+        return $"|{runWay}|";
+    }
+    public static Car2[] ReturnCarsSamecolor(Car2 car)
+    {
+        Car2[] randomCars = new Car2[10];
+        for (int i = 0; i < 10; i++)
+        {
+            randomCars[i] = new Car2(car.color);
+        }
+        return randomCars;
+    }
+    public Car2()
+    {
+        Random r = new();
+        length = r.Next(3, 6);
+        color = (ConsoleColor)r.Next(1, 15);
+        speed = r.Next(60, 241);
+
+    }
+    public Car2(ConsoleColor color)
+    {
+        Random r = new();
+        length = r.Next(3, 6);
+        this.color = color;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Person
 {
@@ -327,70 +415,4 @@ class BlueAndRed
         }
     }
 
-}
-class Car2
-{
-    public ConsoleColor color;
-    public int length;
-    public int speed;
-    private int _distance = 0;
-    public int Distance
-    {
-        get
-        {
-            return _distance;
-        }
-        set
-        {
-            _distance += value;
-        }
-    }
-    public void DriveForOneHour()
-    {
-        this.Distance = this.speed;
-    }
-    public string GetGraph()
-    {
-        string runWay = String.Empty;
-        int distanceMarker = this.Distance / (10000 / 18);
-        for (int i = 0; i < 19; i++)
-        {
-            if (i == distanceMarker)
-            {
-                runWay += 'X';
-            }
-            else if (i == 18 && distanceMarker >= 18)
-            {
-                runWay += 'X';
-            }
-            else
-            {
-                runWay += '-';
-            }
-        }
-        return $"|{runWay}|";
-    }
-    public static Car2[] ReturnCarsSamecolor(Car2 car)
-    {
-        Car2[] randomCars = new Car2[10];
-        for (int i = 0; i < 10; i++)
-        {
-            randomCars[i] = new Car2(car.color);
-        }
-        return randomCars;
-    }
-    public Car2()
-    {
-        Random r = new();
-        length = r.Next(3, 6);
-        color = (ConsoleColor)r.Next(1, 15);
-        speed = r.Next(60, 241);
-
-    }
-    public Car2(ConsoleColor color)
-    {
-        Random r = new();
-        length = r.Next(3, 6);
-        this.color = color;
-    }
 }
