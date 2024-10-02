@@ -1,0 +1,266 @@
+
+# 018_Anonymous methods and types, Lambda, Extensions, Library, Interface
+
+## Anonymous methods
+
+Old way
+
+```c#
+Box picosPaintings = DrawAll(photoStack,Pico);;
+
+Public Painting Pico(Photo photo)
+{
+	return createAwesomePainting(photo)
+}
+
+Box anonymousPaintings = DrawAll(photostack, delegate(Photo photo) { return createAwesomePainting(photo);});
+```
+
+New Way - Lambda Expression
+
+```c#
+Box lamdaPainting = DrawAll(photoStack, p => createAwesomePainting(p));
+```
+
+## Lambda expressions
+Useful if you have short methods.
+
+Are not saved anywhere so you can't reuse them.
+
+Syntax 
+```c#
+//(input-parameters) => expression
+
+//ex 1: Lambda expression with one parameter assigned to delegate:
+Func<int, int> Square = x => x * x;
+Action<int> PrintInt = x => Console.WriteLine(x);
+printInt(lambdaSquare(5));
+
+//ex 2: Lambda expression with mulitple parameters
+Person person = new Person() { Age = 15 };
+
+Func<Person, int, bool> checkLegalAge = (Person, legalAge) => Person.Age >= legalAge;
+
+Console.WriteLine(checkLegalAge(person, 18));
+
+class Person
+{
+    public int Age { get; set; }
+}
+
+(a, b, c) => $"{a} + {b} + {c} = {a + b + c}"
+
+//Ex 3: Lambda expressions without parameters
+() => Console.WriteLine("Hello world")
+() => SaveFile()
+
+//Ex 4: Multiple statements in lambda expression body
+(photo, painting) =>
+{
+	painting.deliveryAddress = photo.owner.address;
+	return painting;
+}
+
+//Another example, same result -> with//without lambda
+PrintResult(x => x * 10, 5);
+PrintResult(MultiplyByTen, 5);
+
+static int MultiplyByTen(int x)
+{
+    return x * 10;
+}
+static void PrintResult(Func<int, int> func, int n)
+{
+    for (int i = 1; i <= 10; i++)
+    {
+        Console.WriteLine($"{i}: {func(i)}");
+    }
+    
+}
+
+```
+
+## Anonymous types
+
+A type (class) without any name that can contain public read-only properties only. It cannot contain other members, such as fields, methods, events, etc.
+
+```c#
+//Must use var keyword
+var data = new { FirstName = "Hejkon", LastName = "Bejkon", Age = 33 };
+
+//ToString() is overridden:
+Console.WriteLine(data);
+//Output: { FirstName = "Hejkon", LastName = "Bejkon", Age = 33 };
+
+//Array of anonymous types
+var people = new[] {
+	new {LastName = "Björnsson", FirstName = "Björn", Age = 39}
+	new {LastName = "Pellesson", FirstName = "Pelle", Age = 39}
+};
+
+//Nested anonymous types
+var anonymousPerson = new
+{
+    name = "Anders Eriksson",
+    age = 45,
+    contactInfo = new { email = "anders@gmail.com", phone = 07384902}
+};
+```
+
+## Extension methods
+
+Enable you to "add" methods to existing types without creating a new derived type.
+
+Extension methods are static methods but are called on object directly.
+
+```c#
+
+Cat myCat = new() { Name = "Misse" };
+Cat myOtherCat = new() { Name = "Kisse" };
+CatMethods.Drink(myCat);
+
+static class CatMethods
+{
+    public static void Drink(Cat cat)
+    {
+        Console.WriteLine($"{cat.Name} is drinking.");
+    }
+}
+
+//Extension methods, use this keyword as parameter
+myCat.Drink();
+myCat.Hug(myOtherCat);
+Console.WriteLine(myCat.CompareCats(myOtherCat));
+
+static class CatExtensions
+{
+    public static void Drink(this Cat cat)
+    {
+        Console.WriteLine($"{cat.Name} is drinking.");
+    }
+    public static void Hug(this Cat c1, Cat c2)
+    {
+        Console.WriteLine($"{c1.Name} hugs {c2.Name}");
+    }
+    public static string CompareCats(this Cat c1, Cat c2)
+    {
+        if (c1.Name[0] == c2.Name[0])
+        {
+            return $"{c1.Name} and {c2.Name} names begins with the same letter!";
+        }
+        else
+        {
+            return $"{c1.Name} and {c2.Name} names doesn't begin with the same letter!";
+        }
+    }
+}
+
+//Create new method for string class
+Console.WriteLine("Hello World".Encapsulate("!@!"));
+//Output: !@!Hello World!@!
+
+static class StringExtensions
+{
+    public static string Encapsulate(this string stringToEncapsulate, string encapsulation)
+    {
+        return $"{encapsulation}{stringToEncapsulate}{encapsulation}";
+    }
+}
+```
+
+## Library
+
+New project -> Class Library
+
+build library => builds dll - Dynamically linked library
+
+import dll to project: Add -> Project reference -> browse for .dll file
+
+What has been imported as project reference -> dependencies.
+
+```c#
+namespace L018_Library
+{
+    public static class StringExtensions
+    {
+        public static int WordCount(this string s)
+        {
+            return s.Split(' ').Length;
+        }
+        public static string Encapsulate(this string stringToEncapsulate, string encapsulation)
+        {
+            return $"{encapsulation}{stringToEncapsulate}{encapsulation}";
+        }
+        public static string Encapsulate(this string stringToEncapsulate, string prefix, string suffix)
+        {
+            return $"{prefix}{stringToEncapsulate}{suffix}";
+        }
+    }
+}
+```
+
+## Interface
+
+Classes can implement interface.
+
+A contract that classes can agree upon implementing everything that the contract stipulates.
+
+
+### Common interfaces
+IEnumerable
+Is used for classes that should be able to iterate through. It implements Ienumerable.
+
+IComparable
+Implements to make a class sortable.
+
+IFormatable.
+
+IDisposable
+Is used together with using to guarantee that resources are freed when leaving "using"-scope.
+
+```c#
+Dog[] dogs =
+{
+    new Dog() { Name = "Dog4"},
+    new Dog() { Name = "Dog3"},
+    new Dog() { Name = "Dog2"},
+    new Dog() { Name = "Dog1"}
+};
+
+//Sorts by Name
+Array.Sort(dogs);
+
+List<Dog> doggies = new List<Dog> { new Dog() };
+
+using (var dog = new Dog())
+{
+    Console.WriteLine("Dog!");
+}
+
+Console.WriteLine("The end!");
+
+
+class Dog : IDisposable, IDog, IComparable<Dog>
+{
+    public string Name { get; set; }
+
+    public int CompareTo(Dog? other)
+    {
+        return this.Name.CompareTo(other.Name);
+    }
+
+    public void Dispose()
+    {
+        Console.WriteLine("Disposed");
+    }
+    public override string ToString()
+    {
+        return Name;
+    }
+}
+
+interface IDog
+{
+    public string Name { get; set; }
+}
+```
