@@ -38,7 +38,7 @@ static int MultiplyByTen(int x)
 }
 static void PrintResult(Func<int, int> func, int n)
 {
-    for (int i = 1; i <= 10; i++)
+    for (int i = 1; i <= n; i++)
     {
         Console.WriteLine($"{i}: {func(i)}");
     }

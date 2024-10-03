@@ -14,5 +14,10 @@
         {
             return $"{prefix}{stringToEncapsulate}{suffix}";
         }
+        public static string Title(this string s)
+        {
+            if (s.Length < 1) return string.Empty;
+            return s.Substring(0, 1).ToUpper() + s.Substring(1).ToLower();
+        }
     }
 }
