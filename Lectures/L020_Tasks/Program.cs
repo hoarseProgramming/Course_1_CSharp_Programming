@@ -68,3 +68,43 @@ Console.ReadKey();
 //Result also blocks the thread.
 //task1.Result();
 
+
+//ContinueWith example, method chaining
+//Task.Run(() =>
+//{
+//    //Code...
+//    return "Hello";
+//})
+//.ContinueWith(task => {
+//    //Code....
+//    Console.WriteLine(task.Result);
+//    return task.Result[0];
+//})
+//.ContinueWith(task => {
+//    //Code....
+//    Console.WriteLine(task.Result);
+//});
+
+//Console.ReadKey();
+
+//Same thing with variables
+
+//Task<string> task1 = Task.Run(() =>
+//{
+//    //Code...
+//    return "Hello";
+//});
+
+//Task<Char> task2 = task1.ContinueWith(task => {
+//    //Code....
+//    Console.WriteLine(task.Result);
+//    return task.Result[0];
+//});
+
+//Task task3 = task2.ContinueWith(task => {
+//    //Code....
+//    Console.WriteLine(task.Result);
+//});
+
+//Console.ReadKey();
+
